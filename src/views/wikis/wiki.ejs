@@ -8,6 +8,9 @@
       <% include ../static/partials/navbar.ejs %>
 
       <h1>Wikis</h1>
+      <a href="/wikis/new" class="btn btn-success">New Wiki</a>
+
+      <% if(wikis.private === false) { %>
 
       <ul class="list-group">
 <!-- #1 -->
@@ -17,6 +20,7 @@
             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
           </li>
         <% }) %>
+           <% } %>
       </ul>
 
     </main>

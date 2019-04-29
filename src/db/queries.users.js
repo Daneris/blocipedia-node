@@ -1,6 +1,7 @@
 // #1
 const User = require("./models").User;
 const bcrypt = require("bcryptjs");
+const Wiki = require("./models").Wiki;
 
 module.exports = {
 // #2

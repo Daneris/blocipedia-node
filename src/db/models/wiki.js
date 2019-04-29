@@ -13,9 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false
 
-    }
+    },
+    userId: {
+     type: DataTypes.INTEGER,
+     allowNull: false
+   }
   }, {});
   Wiki.associate = function(models) {
+    Wiki.belongsTo(models.User, {
+     foreignKey: "userId",
+     onDelete: "CASCADE"
+    });
     // associations can be defined here
   };
   return Wiki;
