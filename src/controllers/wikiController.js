@@ -4,9 +4,9 @@ const wikiQueries = require("../db/queries.wikis.js");
    wiki(req, res, next){
 
       wikiQueries.getAllWikis((err, wikis) => {
-
+        console.log(wikis)
         if(err){
-          console.log(err)
+
           res.redirect(500, "static/index");
         } else {
           //renamed wikis/wiki from wikis/index
