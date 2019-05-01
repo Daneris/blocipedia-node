@@ -25,5 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       as: "wikis"
     });
   };
+
+  User.prototype.isAdmin = function() {
+    return this.role === 1;
+  };
+
+
   return User;
 };
