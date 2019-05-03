@@ -1,4 +1,3 @@
-// #1
 const User = require("./models").User;
 const bcrypt = require("bcryptjs");
 const Wiki = require("./models").Wiki;
@@ -22,6 +21,26 @@ module.exports = {
     .catch((err) => {
       callback(err);
     })
-  }
+  },
+
+
+
+
+  getUser(id, callback){
+
+    let result = {};
+    User.findById(id)
+    .then((user) => {
+
+      if(!user) {
+        callback(404);
+      } else {
+        result["user"] = user;
+        }
+
+    })
+  },
+
+
 
 }

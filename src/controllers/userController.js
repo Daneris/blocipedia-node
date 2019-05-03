@@ -3,6 +3,7 @@ const passport = require("passport");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const stripe = require("stripe")(process.env.STRIPE_KEY);
+const User = require("../db/models").User;
 
 module.exports = {
 
@@ -68,6 +69,7 @@ module.exports = {
   },
 
   charge(req,res,next){
+
     console.log(req.body);
     const amount = 500;
 
@@ -85,14 +87,25 @@ module.exports = {
           })
             .then((charge) =>{
               res.render("users/success")
-            
+
             })
+
             .catch((err)=>{
               console.log(err);
             })
-        })
 
-      }
+          })
+          userQueries.getUser(req.params.id,(err,result) =>{
+            User.update(
+              {defaultValue: 1},
+              {where: req.params.id}
+            )
+
+          })
+
+
+        }
+
 
 
 
