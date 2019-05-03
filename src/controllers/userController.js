@@ -2,6 +2,7 @@ const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 module.exports = {
 
@@ -60,7 +61,38 @@ module.exports = {
     req.logout();
     req.flash("notice", "You've successfully signed out!");
     res.redirect("/");
-  }
+  },
+
+  upgradeAccount(req,res,next){
+    res.render("users/upgradeAccount");
+  },
+
+  charge(req,res,next){
+    console.log(req.body);
+    const amount = 500;
+
+    stripe.customers.create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken
+      })
+
+        .then((customer) => {
+          stripe.charges.create({
+            amount,
+            description:"Premium Account create private wikis",
+            currency: "usd",
+            customer: customer.id
+          })
+            .then((charge) =>{
+              res.render("users/success")
+            
+            })
+            .catch((err)=>{
+              console.log(err);
+            })
+        })
+
+      }
 
 
 

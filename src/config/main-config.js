@@ -7,6 +7,7 @@ const session = require("express-session");
 const flash = require("express-flash");
 const passportConfig = require("./passport-config");
 const sgMail = require("@sendgrid/mail");
+const stripe = require("stripe");
 
 module.exports = {
   init(app,express){
@@ -22,6 +23,10 @@ module.exports = {
        saveUninitialized: false,
        cookie: { maxAge:  1.21e+9 }
      }));
+
+     app.use(session({
+       secret: process.env.STRIPE_KEY
+     }))
 
      app.use(session({
         secret: process.env.SENDGRID_API_KEY
