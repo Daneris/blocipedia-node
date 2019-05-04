@@ -96,10 +96,15 @@ module.exports = {
 
           })
           userQueries.getUser(req.params.id,(err,result) =>{
-            User.update(
-              {defaultValue: 1},
-              {where: req.params.id}
-            )
+            console.log(req.params.id)
+            User.update({role: 1}, {
+              where: {
+                id: req.params.id
+              }
+
+            }).then(() =>{
+              console.log("done")
+            })
 
           })
 
